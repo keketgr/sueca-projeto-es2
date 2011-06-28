@@ -5,7 +5,8 @@
 
 package br.uff.es;
 
-import br.uff.es.model.Partida;
+import br.uff.es.ctrl.PanelCardsController;
+import br.uff.es.ctrl.PartidaController;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,8 +125,8 @@ public class PanelCardsControllerTest {
     public void testGetPartida() {
         System.out.println("getPartida");
         PanelCardsController instance = new PanelCardsController();
-        Partida expResult = null;
-        Partida result = instance.getPartida();
+        PartidaController expResult = null;
+        PartidaController result = instance.getPartida();
         //assertEquals(expResult, result);
         assertEquals(1+1, 2);
         // TODO review the generated test code and remove the default call to fail.
@@ -138,7 +139,7 @@ public class PanelCardsControllerTest {
     @Test
     public void testSetPartida() {
         System.out.println("setPartida");
-        Partida partida = null;
+        PartidaController partida = null;
         PanelCardsController instance = new PanelCardsController();
         instance.setPartida(partida);
         assertEquals(1+1, 2);
