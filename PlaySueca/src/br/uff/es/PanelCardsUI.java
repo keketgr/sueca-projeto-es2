@@ -11,6 +11,7 @@
 
 package br.uff.es;
 
+import br.uff.es.ctrl.PanelCardsController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,6 @@ public class PanelCardsUI extends javax.swing.JPanel {
     private void giveCards(List<String> cardsRaffled) {
         for (int i=0;i<cardsRaffled.size();i++) {
             int player = i % 4;
-            
             cardsCtrl.getPartida().entregaCarta(player, cardsRaffled.get(i));
         }
         cardsCtrl.getPartida().ordenaCartas();

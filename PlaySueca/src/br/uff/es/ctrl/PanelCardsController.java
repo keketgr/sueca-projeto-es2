@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package br.uff.es;
+package br.uff.es.ctrl;
 
-import br.uff.es.model.Partida;
+import br.uff.es.ctrl.PartidaController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,13 +19,13 @@ import java.util.Map;
 public class PanelCardsController {
 
     private Map<String,Map<String,Integer>> cards;
-    private Partida partida;
+    private PartidaController partida;
 
 
 
 
     public PanelCardsController() {
-        partida = new Partida();
+        partida = new PartidaController();
         initialize();
     }
 
@@ -38,9 +38,6 @@ public class PanelCardsController {
 
         for (String naipe : cards.keySet()) {
             cards.get(naipe).putAll(partida.getPontuacaoCartas());
-
-            
-
         }
 
         
@@ -79,14 +76,14 @@ public class PanelCardsController {
     }
 
     public void resetPartida() {
-        partida = new Partida();
+        partida = new PartidaController();
     }
 
-    public Partida getPartida() {
+    public PartidaController getPartida() {
         return partida;
     }
 
-    public void setPartida(Partida partida) {
+    public void setPartida(PartidaController partida) {
         this.partida = partida;
     }
 
