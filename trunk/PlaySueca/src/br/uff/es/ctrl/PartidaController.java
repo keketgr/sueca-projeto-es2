@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package br.uff.es.model;
+package br.uff.es.ctrl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Goop
  */
-public class Partida {
+public class PartidaController {
     //private List<String> cartasNaMesa;
     private Object[] cartasNaMesa;
     private List<String> cartasDaRodada;
@@ -26,7 +26,7 @@ public class Partida {
     private Map<String, Integer> pontuacaoCartas;
 
 
-    public Partida() {
+    public PartidaController() {
         //cartasNaMesa = new ArrayList<String>();
         cartasNaMesa = new Object[4];
         cartasDaRodada = new ArrayList<String>();
@@ -105,24 +105,51 @@ public class Partida {
     private boolean isMaiorPontuacao(String candidata,String analisada) {
         String valCartaCandidata = candidata.substring(0,candidata.indexOf(" de "));
         String valCartaAnalisada = analisada.substring(0,analisada.indexOf(" de "));
-        System.out.println("valCartaAnalisada: "+pontuacaoCartas.get(valCartaAnalisada));
-        System.out.println("valCartaCandidata: "+pontuacaoCartas.get(valCartaCandidata));
-        return pontuacaoCartas.get(valCartaAnalisada)>pontuacaoCartas.get(valCartaCandidata);
+        //System.out.println("valCartaAnalisada: "+pontuacaoCartas.get(valCartaAnalisada));
+        //System.out.println("valCartaCandidata: "+pontuacaoCartas.get(valCartaCandidata));
+        List<String> cartas =  new ArrayList(pontuacaoCartas.keySet());
+        return cartas.indexOf(valCartaAnalisada)<cartas.indexOf(valCartaCandidata);
+    }
+
+    private int encontraIndexNaipe(String naipe,List<String> cartas,int offset) {
+        for (int i=offset;i<cartas.size();i++) {
+            String carta = cartas.get(i);
+            if (carta.contains(naipe)) 
+                return i;
+        }
+        return -1;
+    }
+
+    private void ordenaNaipe(String naipe,List<String> cartas) {
+
+        int indexNaipe = encontraIndexNaipe(naipe, cartas,0);
+        int search = 0;
+        while (indexNaipe>=0) {
+            String cartaCandidata = cartas.get(indexNaipe);
+            search = indexNaipe-1;
+            if (cartaCandidata.equals("dama de copas")) {
+                //System.out.println("Search dama de copas : "+search);
+            }
+            while (search>-1 && !isMesmoNaipe(cartaCandidata, cartas.get(search)))
+                search--;
+            while (search>-1 && isMesmoNaipe(cartaCandidata, cartas.get(search)) && isMaiorPontuacao(cartaCandidata, cartas.get(search)))
+                search--;
+
+            String carta = cartas.remove(indexNaipe);
+            cartas.add(search+1, carta);
+            indexNaipe = encontraIndexNaipe(naipe, cartas,indexNaipe+1);
+        }
     }
 
     public void ordenaCartas() {
         for (int player=0;player<4;player++) {
             List<String> cartasFromPlayer = (List<String>)cartasNaMesa[player];
-            for (int i=1;i<cartasFromPlayer.size();i++) {
-                String cartaCandidata = cartasFromPlayer.get(i);
-                int search = i-1;
-                while (search>0 && !isMesmoNaipe(cartaCandidata, cartasFromPlayer.get(search)))
-                    search--;
-                while (search>0 && isMesmoNaipe(cartaCandidata, cartasFromPlayer.get(search)) && isMaiorPontuacao(cartaCandidata, cartasFromPlayer.get(search)))
-                    search--;
-                String carta = cartasFromPlayer.remove(i);
-                cartasFromPlayer.add(search+1, carta);
-            }
+                       
+            ordenaNaipe("paus", cartasFromPlayer);
+            ordenaNaipe("ouro", cartasFromPlayer);
+            ordenaNaipe("espada", cartasFromPlayer);
+            ordenaNaipe("copas", cartasFromPlayer);
+            
         }
     }
 
