@@ -39,7 +39,7 @@ public class Juiz {
 		  		j.setPontos(j.getPontos()+10);
 		  		System.out.println(j.getPontos());
 		  		break;
-		  	case a:
+		  	case as:
 		  		j.setPontos(j.getPontos()+11);
 		  		System.out.println(j.getPontos());
 		  		break;	

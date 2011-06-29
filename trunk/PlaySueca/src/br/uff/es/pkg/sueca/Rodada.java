@@ -8,14 +8,50 @@ public class Rodada {
 	private Deque<Jogador> ordem;
 	private Jogador campeaoDaRodada;
     private Carta[] cartasJogadas=new Carta[4];
+    private Jogador[] jogadores;
+    private int jogadas;
     
     public Rodada(Jogador jogadores[]){
     	ordem = new LinkedList<Jogador>();
-		DeterminaOrdem(jogadores);
-		this.campeaoDaRodada = new Jogador("Ninguem");
+        this.jogadores = jogadores;
+        DeterminaOrdem(jogadores);
+        this.campeaoDaRodada = new Jogador("Ninguem");
     	
     }
-	
+
+	public void iniciaNovaRodada() {
+            String ultimoCampeao = getCampeaoDaRodada().getNome();
+            if (!ultimoCampeao.equals("Ninguem")){
+                int player = -1;
+                for (int i=0;i<jogadores.length;i++) {
+                    if (jogadores[i].getNome().equals(ultimoCampeao)) {
+                        player = i;
+                        break;
+                    }
+                }
+                DeterminaOrdem(jogadores, player);
+            }
+            jogadas = 0;
+        }
+
+        public Jogador getProximoJogador() {
+            return ordem.getFirst();
+        }
+
+        public Carta joga(Carta carta) {
+            Jogador proxJogador = ordem.remove();
+            Carta cartaJogada = proxJogador.Joga(carta);
+            cartasJogadas[jogadas] = cartaJogada;
+            ordem.addLast(proxJogador);
+            jogadas++;
+            return cartaJogada;
+        }
+
+        public void contabilizaPontos() {
+            this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));
+            Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
+        }
+
 	
 	public void IniciaRodada(Jogador jogadores[], String ultimoCampeao){
 		if (ultimoCampeao!="Ninguem"){
@@ -61,17 +97,33 @@ public class Rodada {
 		this.campeaoDaRodada = campeaoDaRodada;
 	}
 
-	private void DeterminaOrdem(Jogador jogadores[]){
+        public Jogador[] getJogadores() {
+            return jogadores;
+        }
+
+        public boolean isFimRodada() {
+            return !(jogadas<jogadores.length);
+        }
+        
+
+
+	private void DeterminaOrdem(Jogador jogadores[],int player){
+                ordem = new LinkedList<Jogador>();
 		Random ord = new Random();
-		int njsorts = 0;
-		while (njsorts<4){
-			int jsorteado = ord.nextInt(4);
-			if (!ordem.contains(jogadores[jsorteado])){
-					ordem.add(jogadores[jsorteado]);
-					njsorts++;
-			}
-		}
+                int sorteado = player==-1?ord.nextInt(4):player;
+                ordem.add(jogadores[sorteado]);
+                for (int i=(sorteado+1);i<jogadores.length;i++)
+                    ordem.add(jogadores[i]);
+                for (int i=0;i<=sorteado-1;i++)
+                    ordem.add(jogadores[i]);
+
 		
+	}
+
+        private void DeterminaOrdem(Jogador jogadores[]){
+		DeterminaOrdem(jogadores, -1);
+
+
 	}
 	
 }

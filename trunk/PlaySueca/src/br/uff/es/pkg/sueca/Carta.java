@@ -46,7 +46,29 @@ public class Carta {
 	}
 	
 	public String toString(){
-		return this.getNaipe().toString()+this.getValor().toString();
+		return this.getValor().toString()+" de "+this.getNaipe().toString();
 	}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Carta other = (Carta) obj;
+        if (this.valor != other.valor) {
+            return false;
+        }
+        if (this.naipe != other.naipe) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+
 	
 }

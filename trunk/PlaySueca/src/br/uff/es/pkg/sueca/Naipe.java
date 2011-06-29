@@ -1,7 +1,7 @@
 package br.uff.es.pkg.sueca;
 
 public enum Naipe {
-	 NaoDefinido, Espada, Paus, Copas, Ouro; 
+	 NaoDefinido, espada, paus, copas, ouro;
 	 
 	 public Naipe prox(){
 		 Naipe vals[] = Naipe.values();

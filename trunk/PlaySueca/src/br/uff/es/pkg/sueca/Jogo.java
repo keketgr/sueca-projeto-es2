@@ -4,9 +4,13 @@ import java.util.Random;
 
 public class Jogo {
 	//private String campeao=null;
+        private Jogador jogadores[];
+        private Rodada rodada;
 	
-	public Jogo(Baralho b, Jogador jogadores[]){ 
-		DeterminaDuplas(jogadores);
+	public Jogo(Baralho b, Jogador jogadores[]){
+            this.jogadores = jogadores;
+            
+            DeterminaDuplas(jogadores);
 	    DistribuiCartas(b, jogadores);
 	    Rodada r = new Rodada(jogadores);
 	    for (int i=0;i<10;i++)
@@ -16,6 +20,20 @@ public class Jogo {
 	    Juiz.CalculaDuplaVencedora(jogadores);
 	    //Calcula vencedor
 	}
+
+        public Jogo(Jogador jogadores[]) {
+            this.jogadores = jogadores;
+            rodada = new Rodada(jogadores);
+            DeterminaDuplas(jogadores);
+        }
+
+        public void distrubuiCarta(Carta carta,int player) {
+  
+            if (jogadores[player].entregaCartaAoJogador(carta))
+                carta.setPertenceA(jogadores[player].getNome());
+
+        }
+
 	
 	public void DistribuiCartas(Baralho b, Jogador jogadores[]){
 		Random r = new Random();
@@ -39,7 +57,18 @@ public class Jogo {
  	    jogadores[2].setnDupla(2);
  	    jogadores[3].setnDupla(2);
 	}
-        	
+
+    public Rodada getRodada() {
+        return rodada;
+    }
+
+    public void setRodada(Rodada rodada) {
+        this.rodada = rodada;
+    }
+
+
+
+        
 }
         
 		
