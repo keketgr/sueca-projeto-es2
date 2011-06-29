@@ -10,6 +10,7 @@ import br.uff.es.pkg.sueca.Jogador;
 import br.uff.es.pkg.sueca.JogadorCPU;
 import br.uff.es.pkg.sueca.JogadorHumano;
 import br.uff.es.pkg.sueca.Jogo;
+import br.uff.es.pkg.sueca.Juiz;
 import br.uff.es.pkg.sueca.Naipe;
 import br.uff.es.pkg.sueca.Valor;
 import java.util.ArrayList;
@@ -83,8 +84,33 @@ public class Game {
         return cartasNaMao;
     }
 
-    public void contabilizaPontos() {
-        jogo.getRodada().contabilizaPontos();
+    public String contabilizaPontos() {
+        return jogo.getRodada().contabilizaPontos();
+    }
+
+    public List<String> getCartasJogadas() {
+        List<String> cartasJogadasList = new ArrayList<String>();
+        Carta[] cartasJogadas = jogo.getRodada().getCartasJogadas();
+        for (int i=0;i<cartasJogadas.length;i++) {
+            cartasJogadasList.add(cartasJogadas[i].toString());
+        }
+        return cartasJogadasList;
+    }
+
+    public boolean isFimJogo() {
+        return jogo.getRodada().isFimJogo();
+    }
+
+    public int calculaDuplaVencedora() {
+        return Juiz.CalculaDuplaVencedora(jogo.getRodada().getJogadores());
+    }
+
+    public static int getGeralDupla1() {
+        return Juiz.getPontosGeralDupla1();
+    }
+
+    public static int getGeralDupla2() {
+        return Juiz.getPontosGeralDupla2();
     }
 
     public int getPontosDupla1() {

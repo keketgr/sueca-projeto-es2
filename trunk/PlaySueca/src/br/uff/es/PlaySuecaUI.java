@@ -11,9 +11,12 @@
 
 package br.uff.es;
 
+import br.uff.es.pkg.sueca.factory.Game;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -32,6 +35,15 @@ public class PlaySuecaUI extends javax.swing.JFrame {
         panelCardsUI = new PanelCardsUI();
         //panelCardsUI.setBounds(panelCards.getBounds());
         panelCards.add(panelCardsUI);
+        panelCardsUI.addPropertyChangeListener(new PropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent evt) {
+                lblGeralDp1.setText("Dupla 1 : "+Game.getGeralDupla1());
+                lblGeralDp2.setText("Dupla 2 : "+Game.getGeralDupla2());
+                System.out.println("Dupla 1 " + Game.getGeralDupla1());
+                System.out.println("Dupla 2 " + Game.getGeralDupla2());
+            }
+        });
         setCanvasConf();
     }
 
@@ -74,6 +86,11 @@ public class PlaySuecaUI extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         panelCards = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        lblGeralDp1 = new javax.swing.JLabel();
+        lblGeralDp2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Play Sueca !");
@@ -98,13 +115,32 @@ public class PlaySuecaUI extends javax.swing.JFrame {
             .addGap(0, 562, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Dar Cartas");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Geral");
+
+        lblGeralDp1.setText("Dupla 1 : 0");
+
+        lblGeralDp2.setText("Dupla 2 : 0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblGeralDp1)
+                    .addComponent(lblGeralDp2))
                 .addGap(32, 32, 32)
                 .addComponent(panelCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -115,7 +151,17 @@ public class PlaySuecaUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGeralDp1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGeralDp2))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panelCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -143,6 +189,11 @@ public class PlaySuecaUI extends javax.swing.JFrame {
     private PanelCardsUI panelCardsUI;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblGeralDp1;
+    private javax.swing.JLabel lblGeralDp2;
     private javax.swing.JPanel panelCards;
     // End of variables declaration//GEN-END:variables
 

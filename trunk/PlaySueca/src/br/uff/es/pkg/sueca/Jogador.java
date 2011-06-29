@@ -5,6 +5,7 @@ public class Jogador {
 	private String nome;
 	private int pontos;
 	private int nDupla;
+
 	
 	public Carta[] getCartasNaMao() {
 		return cartasNaMao;

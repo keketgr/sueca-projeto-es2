@@ -10,12 +10,14 @@ public class Rodada {
     private Carta[] cartasJogadas=new Carta[4];
     private Jogador[] jogadores;
     private int jogadas;
+    private int numRodadas;
     
     public Rodada(Jogador jogadores[]){
     	ordem = new LinkedList<Jogador>();
         this.jogadores = jogadores;
-        DeterminaOrdem(jogadores);
+        DeterminaOrdem(jogadores,0);
         this.campeaoDaRodada = new Jogador("Ninguem");
+        numRodadas = 0;
     	
     }
 
@@ -32,6 +34,7 @@ public class Rodada {
                 DeterminaOrdem(jogadores, player);
             }
             jogadas = 0;
+            numRodadas++;
         }
 
         public Jogador getProximoJogador() {
@@ -47,9 +50,10 @@ public class Rodada {
             return cartaJogada;
         }
 
-        public void contabilizaPontos() {
+        public String contabilizaPontos() {
             this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));
             Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
+            return this.getCampeaoDaRodada().getNome();
         }
 
 	public int getPontosDupla1() {
@@ -80,6 +84,10 @@ public class Rodada {
 		this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));
 		Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
 	}
+
+        public boolean isFimJogo() {
+            return numRodadas>10;
+        }
 	
 	public Deque<Jogador> getOrdem() {
 		return ordem;
