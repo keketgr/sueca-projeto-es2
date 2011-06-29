@@ -87,6 +87,14 @@ public class Game {
         jogo.getRodada().contabilizaPontos();
     }
 
+    public int getPontosDupla1() {
+        return jogo.getRodada().getPontosDupla1();
+    }
+
+    public int getPontosDupla2() {
+        return jogo.getRodada().getPontosDupla2();
+    }
+
     public boolean isFimRodada() {
         return jogo.getRodada().isFimRodada();
     }

@@ -124,6 +124,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
                 if (game.isFimRodada()) {
                     game.contabilizaPontos();
                     game.iniciaNovaRodada();
+                    p0Val.setText(String.valueOf(game.getPontosDupla1()));
+                    p1Val.setText(String.valueOf(game.getPontosDupla2()));
                 }
                 updateCartas();
             }
@@ -154,6 +156,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
         }
         trunfoPanel.repaint();
         trunfoPanel.add(trunfoUi);
+        rodadaPanel.setVisible(true);
+        rodadaPanel.repaint();
 
     }
 
@@ -180,12 +184,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
         rodadaPanel = new javax.swing.JPanel();
         p0Label = new javax.swing.JLabel();
         p1Label = new javax.swing.JLabel();
-        p2Label = new javax.swing.JLabel();
-        p3Label = new javax.swing.JLabel();
         p0Val = new javax.swing.JLabel();
         p1Val = new javax.swing.JLabel();
-        p2Val = new javax.swing.JLabel();
-        p3Val = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 102));
 
@@ -205,13 +205,11 @@ public class PanelCardsUI extends javax.swing.JPanel {
         trunfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         trunfoLabel.setText("Trunfo");
 
-        p0Label.setText("Jog. 1:");
+        rodadaPanel.setBackground(new java.awt.Color(204, 255, 204));
 
-        p1Label.setText("Jog. 2:");
+        p0Label.setText("Dupla 1");
 
-        p2Label.setText("Jog. 3:");
-
-        p3Label.setText("Jog. 4:");
+        p1Label.setText("Dupla 2:");
 
         javax.swing.GroupLayout rodadaPanelLayout = new javax.swing.GroupLayout(rodadaPanel);
         rodadaPanel.setLayout(rodadaPanelLayout);
@@ -227,16 +225,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
                     .addGroup(rodadaPanelLayout.createSequentialGroup()
                         .addComponent(p1Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p1Val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(rodadaPanelLayout.createSequentialGroup()
-                        .addComponent(p2Label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p2Val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(rodadaPanelLayout.createSequentialGroup()
-                        .addComponent(p3Label)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p3Val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                        .addComponent(p1Val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rodadaPanelLayout.setVerticalGroup(
             rodadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,20 +234,12 @@ public class PanelCardsUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(rodadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(p0Label)
-                    .addComponent(p0Val))
+                    .addComponent(p0Val, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(rodadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(p1Label)
-                    .addComponent(p1Val))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rodadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(p2Label)
-                    .addComponent(p2Val))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rodadaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(p3Label)
-                    .addComponent(p3Val))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(p1Val, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -267,7 +249,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rodadaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(trunfoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(trunfoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -294,10 +276,6 @@ public class PanelCardsUI extends javax.swing.JPanel {
     private javax.swing.JLabel p0Val;
     private javax.swing.JLabel p1Label;
     private javax.swing.JLabel p1Val;
-    private javax.swing.JLabel p2Label;
-    private javax.swing.JLabel p2Val;
-    private javax.swing.JLabel p3Label;
-    private javax.swing.JLabel p3Val;
     private javax.swing.JPanel rodadaPanel;
     private javax.swing.JLabel trunfoLabel;
     private javax.swing.JPanel trunfoPanel;

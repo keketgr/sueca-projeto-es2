@@ -48,6 +48,14 @@ public class Juiz {
 		  System.out.println("Carta "+c[i].toString()+" pertence agora a"+j.getNome());
 	  }
   }
+
+  public static int getPontosDupla1(Jogador j[]) {
+      return (j[0].getPontos()+j[1].getPontos());
+  }
+
+  public static int getPontosDupla2(Jogador j[]) {
+      return (j[2].getPontos()+j[3].getPontos());
+  }
   
   public static void CalculaDuplaVencedora(Jogador j[]){
 	  int d1 = j[0].getPontos()+j[1].getPontos();
