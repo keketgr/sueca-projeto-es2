@@ -68,4 +68,8 @@ public class Jogador {
    public Carta Joga(){
 	   return new Carta();
    }
+
+   public Carta Joga(Carta carta){
+	   return carta;
+   }
 }

@@ -45,5 +45,20 @@ public class JogadorHumano extends Jogador {
 	 }
 	 
 	 return cJogada;
- } 
+ }
+
+    @Override
+    public Carta Joga(Carta carta) {
+        Carta c[] = this.getCartasNaMao();
+        for (int i=0;i<c.length;i++) {
+            if (carta.equals(c[i])) {
+                c[i] = null;
+                System.out.println(this.getNome()+" jogou.("+carta.getNaipe()+"/"+carta.getValor());
+                return carta;
+            }
+        }
+        return null;
+    }
+
+
 }

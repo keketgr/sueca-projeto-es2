@@ -2,7 +2,7 @@ package br.uff.es.pkg.sueca;
 
 
 public enum Valor {
-    NaoDefinido, dois, tres, quatro, cinco, seis, dama, valete, rei, sete, a;
+    NaoDefinido, dois, tres, quatro, cinco, seis, dama, valete, rei, sete, as;
 
     public Valor prox(){
     	/* NaoDefinido eh usado apenas quando uma carta eh inicializada.

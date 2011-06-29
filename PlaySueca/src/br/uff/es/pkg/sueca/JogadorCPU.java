@@ -26,4 +26,9 @@ public class JogadorCPU extends Jogador {
 		 System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
 		 return cJogada;
 	}
+
+        @Override
+        public Carta Joga(Carta carta) {
+            return Joga();
+        }
 }

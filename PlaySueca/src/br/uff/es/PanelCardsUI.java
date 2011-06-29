@@ -12,6 +12,7 @@
 package br.uff.es;
 
 import br.uff.es.ctrl.PanelCardsController;
+import br.uff.es.pkg.sueca.factory.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import javax.swing.JButton;
 public class PanelCardsUI extends javax.swing.JPanel {
 
     Map<String,JButton> cardsUiMap;
+    private Game game;
 
     /** Creates new form PanelCardsUI */
     public PanelCardsUI() {
@@ -33,6 +35,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
         trunfoLabel.setVisible(false);
         trunfoPanel.setVisible(false);
         cardsCtrl = new PanelCardsController();
+        game = new Game();
         makeCards();
     }
 
@@ -54,10 +57,12 @@ public class PanelCardsUI extends javax.swing.JPanel {
 
     public void giveCards() {
         cardsCtrl.resetPartida();
+        game.iniciaJogo();
         giveCards(cardsCtrl.raffleCards());
     }
 
     private void giveCards(List<String> cardsRaffled) {
+
         for (int i=0;i<cardsRaffled.size();i++) {
             int player = i % 4;
             cardsCtrl.getPartida().entregaCarta(player, cardsRaffled.get(i));
@@ -67,11 +72,14 @@ public class PanelCardsUI extends javax.swing.JPanel {
             List<String> cartasJogador = cardsCtrl.getPartida().getCartasJogadorNaMesa(player);
             for(int i=0;i<cartasJogador.size();i++) {
                 giveCardToPlayer(player, i, cartasJogador.get(i));
+                game.entregaCarta(cartasJogador.get(i), player);
             }
         }
         String trunfo = cardsRaffled.get(cardsRaffled.size()-1);
         cardsCtrl.getPartida().setTrunfo(trunfo);
         showUiTrunfo(trunfo);
+        game.iniciaNovaRodada();
+        updateCartas();
         //cardsCtrl.getPartida().setCartasNaMesa(new ArrayList<String>(cardsRaffled));
     }
 
@@ -85,8 +93,10 @@ public class PanelCardsUI extends javax.swing.JPanel {
     }
 
     private void updateCartas() {
-        int player = cardsCtrl.getPartida().getJogadorNaMesa();
-        List<String> cartasJogador = cardsCtrl.getPartida().getCartasJogadorNaMesa(player);
+        //int player = cardsCtrl.getPartida().getJogadorNaMesa();
+        //List<String> cartasJogador = cardsCtrl.getPartida().getCartasJogadorNaMesa(player);
+        String jogador = game.getProximoJogador();
+        List<String> cartasJogador = game.getMaoJogador(jogador);
         for (String key : cardsUiMap.keySet()) {
             JButton cardUi = cardsUiMap.get(key);
             cardUi.setEnabled(cartasJogador.contains(key));
@@ -98,7 +108,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JButton btn = (JButton)evt.getSource();
                 String cardKey = getKey(btn);
-                int player = cardsCtrl.getPartida().getJogadorNaMesa();
+                //int player = cardsCtrl.getPartida().getJogadorNaMesa();
+                int player = game.getNumeroJogador(game.getProximoJogador());
                 if (player==0)
                     btn.setLocation(btn.getX()+20, btn.getY());
                 else if (player==1)
@@ -107,7 +118,13 @@ public class PanelCardsUI extends javax.swing.JPanel {
                     btn.setLocation(btn.getX()-20, btn.getY());
                 else
                     btn.setLocation(btn.getX(), btn.getY()-20);
-                cardsCtrl.getPartida().jogaCarta(cardKey);
+                //cardsCtrl.getPartida().jogaCarta(cardKey);
+                game.joga(cardKey);
+                
+                if (game.isFimRodada()) {
+                    game.contabilizaPontos();
+                    game.iniciaNovaRodada();
+                }
                 updateCartas();
             }
         });
