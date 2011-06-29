@@ -52,7 +52,14 @@ public class Rodada {
             Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
         }
 
-	
+	public int getPontosDupla1() {
+            return Juiz.getPontosDupla1(jogadores);
+        }
+
+        public int getPontosDupla2() {
+            return Juiz.getPontosDupla2(jogadores);
+        }
+
 	public void IniciaRodada(Jogador jogadores[], String ultimoCampeao){
 		if (ultimoCampeao!="Ninguem"){
 			Deque<Jogador> temp = new LinkedList<Jogador>();

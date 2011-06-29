@@ -24,7 +24,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="rodadaPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="311" max="32767" attributes="0"/>
+              <EmptySpace pref="399" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="trunfoLabel" alignment="0" max="32767" attributes="1"/>
                   <Component id="trunfoPanel" alignment="0" max="32767" attributes="1"/>
@@ -78,6 +78,11 @@
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="rodadaPanel">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="ff" red="cc" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -95,18 +100,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="p1Val" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="1">
-                          <Component id="p2Label" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="p2Val" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="1">
-                          <Component id="p3Label" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="p3Val" max="32767" attributes="0"/>
-                      </Group>
                   </Group>
-                  <EmptySpace pref="100" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -116,24 +111,14 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="p0Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="p0Val" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="p0Val" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="p1Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="p1Val" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="p1Val" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="p2Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="p2Val" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="p3Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="p3Val" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -141,31 +126,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="p0Label">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Jog. 1:"/>
+            <Property name="text" type="java.lang.String" value="Dupla 1"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="p1Label">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Jog. 2:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="p2Label">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Jog. 3:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="p3Label">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Jog. 4:"/>
+            <Property name="text" type="java.lang.String" value="Dupla 2:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="p0Val">
         </Component>
         <Component class="javax.swing.JLabel" name="p1Val">
-        </Component>
-        <Component class="javax.swing.JLabel" name="p2Val">
-        </Component>
-        <Component class="javax.swing.JLabel" name="p3Val">
         </Component>
       </SubComponents>
     </Container>
