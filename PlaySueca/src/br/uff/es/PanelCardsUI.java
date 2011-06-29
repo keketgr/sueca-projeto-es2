@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,6 +57,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
     }
 
     public void giveCards() {
+        p0Val.setText("");
+        p1Val.setText("");
         cardsCtrl.resetPartida();
         game.iniciaJogo();
         giveCards(cardsCtrl.raffleCards());
@@ -92,41 +95,83 @@ public class PanelCardsUI extends javax.swing.JPanel {
         return null;
     }
 
+    private void joga(String cardKey) {
+
+        String carta = game.joga(cardKey);
+        JButton btn = cardsUiMap.get(carta);
+        int player = game.getNumeroJogador(game.getProximoJogador());
+        new Animacao(btn).animar(player,4,100);
+        if (game.isFimRodada()) {
+            String campeaoRodada = game.contabilizaPontos();
+            List<String> cartasJogadas = game.getCartasJogadas();
+            game.iniciaNovaRodada();
+            p0Val.setText(String.valueOf(game.getPontosDupla1()));
+            p1Val.setText(String.valueOf(game.getPontosDupla2()));
+            JOptionPane.showMessageDialog(null, campeaoRodada+ " levou a rodada", "Rodada", 1);
+            for (String cartaJogada : cartasJogadas)
+                cardsUiMap.get(cartaJogada).setVisible(false);
+            if (game.isFimJogo()) {
+                int dupla = game.calculaDuplaVencedora();
+                JOptionPane.showMessageDialog(null, "Vencedor da partida: Dupla "+dupla, "Vitória", 1);
+                this.firePropertyChange("vencedor", 0, 1);
+            }
+        }
+    }
+
     private void updateCartas() {
         //int player = cardsCtrl.getPartida().getJogadorNaMesa();
         //List<String> cartasJogador = cardsCtrl.getPartida().getCartasJogadorNaMesa(player);
         String jogador = game.getProximoJogador();
-        List<String> cartasJogador = game.getMaoJogador(jogador);
-        for (String key : cardsUiMap.keySet()) {
-            JButton cardUi = cardsUiMap.get(key);
-            cardUi.setEnabled(cartasJogador.contains(key));
+        while (jogador.contains("CPU")&&!game.isFimJogo()) {
+            jogador = game.getProximoJogador();
+            List<String> cartasJogador = game.getMaoJogador(jogador);
+            for (String key : cardsUiMap.keySet()) {
+                JButton cardUi = cardsUiMap.get(key);
+                cardUi.setEnabled(cartasJogador.contains(key));
+            }
+            if (jogador.contains("CPU"))
+                joga(null);
+            
         }
     }
+
+
 
     private void registerCardAction(JButton card) {
         card.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JButton btn = (JButton)evt.getSource();
                 String cardKey = getKey(btn);
+                
                 //int player = cardsCtrl.getPartida().getJogadorNaMesa();
-                int player = game.getNumeroJogador(game.getProximoJogador());
-                if (player==0)
+                //int player = game.getNumeroJogador(game.getProximoJogador());
+                //new Animacao(btn).animar(player,4,100);
+                /*if (player==0)
+                    btn.setLocation(250, 230);
+                else if (player==1)
+                    btn.setLocation(300, 180);
+                else if (player==2)
+                    btn.setLocation(350, 230);
+                else
+                    btn.setLocation(300, 280);*/
+                /*if (player==0)
                     btn.setLocation(btn.getX()+20, btn.getY());
                 else if (player==1)
                     btn.setLocation(btn.getX(), btn.getY()+20);
                 else if (player==2)
                     btn.setLocation(btn.getX()-20, btn.getY());
                 else
-                    btn.setLocation(btn.getX(), btn.getY()-20);
+                    btn.setLocation(btn.getX(), btn.getY()-20);*/
                 //cardsCtrl.getPartida().jogaCarta(cardKey);
-                game.joga(cardKey);
+                //game.joga(cardKey);
+                joga(cardKey);
                 
-                if (game.isFimRodada()) {
+                /*if (game.isFimRodada()) {
                     game.contabilizaPontos();
                     game.iniciaNovaRodada();
                     p0Val.setText(String.valueOf(game.getPontosDupla1()));
                     p1Val.setText(String.valueOf(game.getPontosDupla2()));
-                }
+                }*/
                 updateCartas();
             }
         });
@@ -170,6 +215,10 @@ public class PanelCardsUI extends javax.swing.JPanel {
         return jBtn;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -207,7 +256,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
 
         rodadaPanel.setBackground(new java.awt.Color(204, 255, 204));
 
-        p0Label.setText("Dupla 1");
+        p0Label.setText("Dupla 1:");
 
         p1Label.setText("Dupla 2:");
 
@@ -249,7 +298,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rodadaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 395, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(trunfoLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(trunfoPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

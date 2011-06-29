@@ -25,7 +25,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="1"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel2" max="32767" attributes="1"/>
+                      <Component id="jSeparator1" max="32767" attributes="1"/>
+                      <Component id="jLabel1" max="32767" attributes="1"/>
+                      <Component id="jButton1" alignment="0" max="32767" attributes="1"/>
+                  </Group>
+                  <Component id="lblGeralDp1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblGeralDp2" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="panelCards" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -39,6 +48,16 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblGeralDp1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblGeralDp2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -80,5 +99,35 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Dar Cartas"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Geral"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblGeralDp1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dupla 1 : 0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblGeralDp2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dupla 2 : 0"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

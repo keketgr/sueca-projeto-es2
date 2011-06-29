@@ -52,9 +52,10 @@ public class JogadorHumano extends Jogador {
         Carta c[] = this.getCartasNaMao();
         for (int i=0;i<c.length;i++) {
             if (carta.equals(c[i])) {
+                Carta cartaRetorno = c[i];
                 c[i] = null;
-                System.out.println(this.getNome()+" jogou.("+carta.getNaipe()+"/"+carta.getValor());
-                return carta;
+                System.out.println(this.getNome()+" jogou.("+cartaRetorno.getNaipe()+"/"+cartaRetorno.getValor());
+                return cartaRetorno;
             }
         }
         return null;

@@ -15,8 +15,9 @@ public class Juiz {
 		  }
 	  }
 	  for (int i=0;i<j.length;i++){
-		  if (cVencedor.getPertenceA()==j[i].getNome()) return j[i];
+		  if (cVencedor.getPertenceA().equals(j[i].getNome())) return j[i];
 	  }
+          System.out.println("Carta: "+cVencedor+ " pertenceA "+cVencedor.getPertenceA());
 	  return null;
   }
   
@@ -57,26 +58,36 @@ public class Juiz {
       return (j[2].getPontos()+j[3].getPontos());
   }
   
-  public static void CalculaDuplaVencedora(Jogador j[]){
-	  int d1 = j[0].getPontos()+j[1].getPontos();
-	  int d2 = j[2].getPontos()+j[3].getPontos();
-	  if (d1>=90){
-		  pontosD1+=2;
-		  System.out.println("Dupla 1 venceu com "+d1+" pontos!");
-	  }
-	  else if (d1>=60){
-		   pontosD1+=1;
-		   System.out.println("Dupla 1 venceu com "+d1+" pontos!");
-	  	  }
-	  	   else if (d2>=90){
-	          pontosD2+=2;
-	          System.out.println("Dupla 2 venceu com "+d1+" pontos!");
-	  	   }   
-	  	        else if (d2>60){
-	  	        	pontosD2+=1;
-	  	        	System.out.println("Dupla 2 venceu com "+d1+" pontos!");
-	  	        }
-  }
-  
+    public static int CalculaDuplaVencedora(Jogador j[]) {
+        int d1 = j[0].getPontos() + j[1].getPontos();
+        int d2 = j[2].getPontos() + j[3].getPontos();
+        if (d1 >= 90) {
+            pontosD1 += 2;
+
+            System.out.println("Dupla 1 venceu com " + d1 + " pontos!");
+            return 1;
+        } else if (d1 >= 60) {
+            pontosD1 += 1;
+            System.out.println("Dupla 1 venceu com " + d1 + " pontos!");
+            return 1;
+        } else if (d2 >= 90) {
+            pontosD2 += 2;
+            System.out.println("Dupla 2 venceu com " + d2 + " pontos!");
+            return 2;
+        } else if (d2 > 60) {
+            pontosD2 += 1;
+            System.out.println("Dupla 2 venceu com " + d2 + " pontos!");
+            return 2;
+        }
+        return 0;
+    }
+
+    public static int getPontosGeralDupla1() {
+      return pontosD1;
+    }
+
+    public static int getPontosGeralDupla2() {
+      return pontosD2;
+    }
   
 }
