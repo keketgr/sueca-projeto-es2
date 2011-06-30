@@ -11,6 +11,15 @@ public class Rodada {
     private Jogador[] jogadores;
     private int jogadas;
     private int numRodadas;
+    private Naipe naipeTrunfo;
+
+    public Naipe getNaipeTrunfo() {
+        return naipeTrunfo;
+    }
+
+    public void setNaipeTrunfo(Naipe naipeTrunfo) {
+        this.naipeTrunfo = naipeTrunfo;
+    }
     
     public Rodada(Jogador jogadores[]){
     	ordem = new LinkedList<Jogador>();
@@ -18,10 +27,12 @@ public class Rodada {
         DeterminaOrdem(jogadores,0);
         this.campeaoDaRodada = new Jogador("Ninguem");
         numRodadas = 0;
+        naipeTrunfo = Naipe.NaoDefinido;
     	
     }
 
 	public void iniciaNovaRodada() {
+            this.naipeTrunfo = Naipe.NaoDefinido;
             String ultimoCampeao = getCampeaoDaRodada().getNome();
             if (!ultimoCampeao.equals("Ninguem")){
                 int player = -1;
@@ -43,7 +54,16 @@ public class Rodada {
 
         public Carta joga(Carta carta) {
             Jogador proxJogador = ordem.remove();
-            Carta cartaJogada = proxJogador.Joga(carta);
+            Carta cartaJogada;
+            if (proxJogador.getPrimeiroAJogar()){
+                cartaJogada = proxJogador.Joga(carta);
+                //System.out.println(cartaJogada.getNaipe()+"/"+this.getNaipeTrunfo());
+                this.setNaipeTrunfo(cartaJogada.getNaipe());
+            } 
+            else {
+                cartaJogada = proxJogador.Joga(carta, this.getNaipeTrunfo());
+                //System.out.println(cartaJogada.getNaipe()+"/"+this.getNaipeTrunfo());
+            }
             cartasJogadas[jogadas] = cartaJogada;
             ordem.addLast(proxJogador);
             jogadas++;
@@ -65,6 +85,7 @@ public class Rodada {
         }
 
 	public void IniciaRodada(Jogador jogadores[], String ultimoCampeao){
+            //Determina ordem dos jogadores
 		if (ultimoCampeao!="Ninguem"){
 			Deque<Jogador> temp = new LinkedList<Jogador>();
 			while(!ordem.isEmpty()){
@@ -75,13 +96,18 @@ public class Rodada {
 			}
 			ordem = temp;
 		}
+                
+                //Realiza as jogadas
 		for(int i=0;i<jogadores.length;i++){
 			Jogador proxJogador = ordem.remove();
-			cartasJogadas[i] = proxJogador.Joga();
+                        cartasJogadas[i] = proxJogador.Joga();
+                        //primeira carta a ser jogada eh o trunfo
+                        if (i==0)
+                            this.setNaipeTrunfo(cartasJogadas[i].getNaipe());
 			ordem.addLast(proxJogador);
 		}
-		
-		this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));
+		//auto-explicativo
+		this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));                            
 		Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
 	}
 
@@ -127,13 +153,18 @@ public class Rodada {
 		Random ord = new Random();
                 int sorteado = player==-1?ord.nextInt(4):player;
                 ordem.add(jogadores[sorteado]);
-                for (int i=(sorteado+1);i<jogadores.length;i++)
+                jogadores[sorteado].setPrimeiroAJogar(true);
+                for (int i=(sorteado+1);i<jogadores.length;i++){
                     ordem.add(jogadores[i]);
-                for (int i=0;i<=sorteado-1;i++)
+                    jogadores[i].setPrimeiroAJogar(false);
+                }
+                for (int i=0;i<=sorteado-1;i++){
                     ordem.add(jogadores[i]);
-
-		
+                    jogadores[i].setPrimeiroAJogar(false);
+                }
 	}
+        
+      
 
         private void DeterminaOrdem(Jogador jogadores[]){
 		DeterminaOrdem(jogadores, -1);

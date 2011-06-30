@@ -52,14 +52,40 @@ public class JogadorHumano extends Jogador {
         Carta c[] = this.getCartasNaMao();
         for (int i=0;i<c.length;i++) {
             if (carta.equals(c[i])) {
+                this.printCartas();
                 Carta cartaRetorno = c[i];
                 c[i] = null;
+                this.setCartasNaMao(c);
                 System.out.println(this.getNome()+" jogou.("+cartaRetorno.getNaipe()+"/"+cartaRetorno.getValor());
                 return cartaRetorno;
             }
         }
         return null;
     }
+    
+    @Override
+    public Carta Joga(Carta carta, Naipe trunfo) {
+        Carta c[] = this.getCartasNaMao();
+        for (int i=0;i<c.length; i++){
+            if(carta.equals(c[i])){
+                this.printCartas();
+                if(temCartadeNaipe(trunfo)){
+                    //Caso jogador tenha carta de naipe do trunfo nao pode jogar carta de outro naipe
+                  if (c[i].getNaipe().compareTo(trunfo)==0){
+                    Carta cartaRetorno = c[i];
+                    c[i] = null;
+                    this.setCartasNaMao(c);
+                    System.out.println(this.getNome()+" jogou.("+cartaRetorno.getNaipe()+"/"+cartaRetorno.getValor());
+                    return cartaRetorno;
+                   }
+                }
+                
+            }
+        }
+        return null;
+    }
 
-
+  
+    
+    
 }

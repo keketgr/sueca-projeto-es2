@@ -1,6 +1,7 @@
 package br.uff.es.pkg.sueca;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 public class JogadorCPU extends Jogador {
 
@@ -14,15 +15,17 @@ public class JogadorCPU extends Jogador {
 	@Override
 	 public Carta Joga(){
 		 Random r = new Random();
-		 int resposta = r.nextInt(10);
+		 int resposta;
 		 Carta c[] = this.getCartasNaMao();
 		 Carta cJogada;
-		 while (c[resposta]==null){
-		   resposta = r.nextInt(10);
-		 }
+                 do {
+                     resposta = r.nextInt(10);
+                 }
+		 while (c[resposta]==null);
 		 cJogada = c[resposta];
 		 c[resposta] = null;
 		 this.setCartasNaMao(c);
+                 this.printCartas();
 		 System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
 		 return cJogada;
 	}
@@ -30,5 +33,27 @@ public class JogadorCPU extends Jogador {
         @Override
         public Carta Joga(Carta carta) {
             return Joga();
+        }
+        
+        @Override
+        public Carta Joga(Carta carta, Naipe nTrunfo){
+            Carta cSorteada = new Carta();
+            if (temCartadeNaipe(nTrunfo)){
+                System.out.println("Tem carta.");
+                ArrayList<Integer> posCartasPossiveis = buscaCartasNaipe(nTrunfo);
+                
+                this.printCartas();
+                Random r = new Random();
+                int resposta = r.nextInt(posCartasPossiveis.size());
+                Carta c[] = this.getCartasNaMao();
+                Carta cJogada = c[posCartasPossiveis.get(resposta)];
+                c[resposta] = null;
+                this.setCartasNaMao(c);
+                System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
+		return cJogada;
+                
+            }      
+                   
+            else { System.out.println("Nao tem carta."); return Joga();}
         }
 }
