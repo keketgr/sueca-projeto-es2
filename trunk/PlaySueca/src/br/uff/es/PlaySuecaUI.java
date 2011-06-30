@@ -38,10 +38,10 @@ public class PlaySuecaUI extends javax.swing.JFrame {
         panelCardsUI.addPropertyChangeListener(new PropertyChangeListener() {
 
             public void propertyChange(PropertyChangeEvent evt) {
-                lblGeralDp1.setText("Dupla 1 : "+Game.getGeralDupla1());
-                lblGeralDp2.setText("Dupla 2 : "+Game.getGeralDupla2());
-                System.out.println("Dupla 1 " + Game.getGeralDupla1());
-                System.out.println("Dupla 2 " + Game.getGeralDupla2());
+                lblGeralDp1.setText("Dupla 1 : "+panelCardsUI.getGame().getGeralDupla1());
+                lblGeralDp2.setText("Dupla 2 : "+panelCardsUI.getGame().getGeralDupla2());
+                System.out.println("Dupla 1 " + panelCardsUI.getGame().getGeralDupla1());
+                System.out.println("Dupla 2 " + panelCardsUI.getGame().getGeralDupla2());
             }
         });
         setCanvasConf();

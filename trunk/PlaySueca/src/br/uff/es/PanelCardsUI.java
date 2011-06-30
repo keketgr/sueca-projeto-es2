@@ -11,9 +11,9 @@
 
 package br.uff.es;
 
-import br.uff.es.ctrl.PanelCardsController;
-import br.uff.es.pkg.sueca.factory.Game;
-import java.util.ArrayList;
+import br.uff.es.ctrl.CardsController;
+import br.uff.es.pkg.sueca.factory.Factory;
+import br.uff.es.pkg.sueca.factory.IGame;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 public class PanelCardsUI extends javax.swing.JPanel {
 
     Map<String,JButton> cardsUiMap;
-    private Game game;
+    private IGame game;
 
     /** Creates new form PanelCardsUI */
     public PanelCardsUI() {
@@ -35,8 +35,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
         rodadaPanel.setVisible(false);
         trunfoLabel.setVisible(false);
         trunfoPanel.setVisible(false);
-        cardsCtrl = new PanelCardsController();
-        game = new Game();
+        cardsCtrl = new CardsController();
+        game = Factory.getGame();
         makeCards();
     }
 
@@ -59,7 +59,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
     public void giveCards() {
         p0Val.setText("");
         p1Val.setText("");
-        cardsCtrl.resetPartida();
+        cardsCtrl.novaPartida();
         game.iniciaJogo();
         giveCards(cardsCtrl.raffleCards());
     }
@@ -68,18 +68,18 @@ public class PanelCardsUI extends javax.swing.JPanel {
 
         for (int i=0;i<cardsRaffled.size();i++) {
             int player = i % 4;
-            cardsCtrl.getPartida().entregaCarta(player, cardsRaffled.get(i));
+            cardsCtrl.entregaCarta(player, cardsRaffled.get(i));
         }
-        cardsCtrl.getPartida().ordenaCartas();
+        cardsCtrl.ordenaCartas();
         for (int player=0;player<4;player++) {
-            List<String> cartasJogador = cardsCtrl.getPartida().getCartasJogadorNaMesa(player);
+            List<String> cartasJogador = cardsCtrl.getCartasJogadorNaMesa(player);
             for(int i=0;i<cartasJogador.size();i++) {
                 giveCardToPlayer(player, i, cartasJogador.get(i));
                 game.entregaCarta(cartasJogador.get(i), player);
             }
         }
         String trunfo = cardsRaffled.get(cardsRaffled.size()-1);
-        cardsCtrl.getPartida().setTrunfo(trunfo);
+        cardsCtrl.setTrunfo(trunfo);
         showUiTrunfo(trunfo);
         game.iniciaNovaRodada();
         updateCartas();
@@ -116,6 +116,10 @@ public class PanelCardsUI extends javax.swing.JPanel {
                 this.firePropertyChange("vencedor", 0, 1);
             }
         }
+    }
+
+    private void isPossuiNaipeRodada(List<String> cartasJogador) {
+
     }
 
     private void updateCartas() {
@@ -180,7 +184,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
     public void makeCards() {
         cardsUiMap = new HashMap<String, JButton>();
         for (String naipe : cardsCtrl.getCards().keySet()) {
-            for (String card : cardsCtrl.getCards().get(naipe).keySet()) {
+            for (String card : cardsCtrl.getCards().get(naipe)) {
                 JButton jBtn = createUiCard(card, naipe);
                 registerCardAction(jBtn);
                 this.add(jBtn);
@@ -215,7 +219,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
         return jBtn;
     }
 
-    public Game getGame() {
+    public IGame getGame() {
         return game;
     }
 
@@ -319,7 +323,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private PanelCardsController cardsCtrl;
+    private CardsController cardsCtrl;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel p0Label;
     private javax.swing.JLabel p0Val;
