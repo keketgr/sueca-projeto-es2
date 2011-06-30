@@ -1,10 +1,11 @@
-package pkg.sueca;
+package br.uff.es.pkg.sueca;
 
 public class Jogador {
 	private Carta cartasNaMao[]=new Carta[10];
 	private String nome;
 	private int pontos;
 	private int nDupla;
+
 	
 	public Carta[] getCartasNaMao() {
 		return cartasNaMao;
@@ -67,5 +68,9 @@ public class Jogador {
 	
    public Carta Joga(){
 	   return new Carta();
+   }
+
+   public Carta Joga(Carta carta){
+	   return carta;
    }
 }
