@@ -1,10 +1,21 @@
 package br.uff.es.pkg.sueca;
 
+import java.util.ArrayList;
+
 public class Jogador {
 	private Carta cartasNaMao[]=new Carta[10];
 	private String nome;
 	private int pontos;
 	private int nDupla;
+        private boolean primeiroAJogar=false;
+
+    public boolean getPrimeiroAJogar() {
+        return primeiroAJogar;
+    }
+
+    public void setPrimeiroAJogar(boolean primeiroAJogar) {
+        this.primeiroAJogar = primeiroAJogar;
+    }
 
 	
 	public Carta[] getCartasNaMao() {
@@ -54,7 +65,8 @@ public class Jogador {
 	
 	public Jogador(){
 		this.nome = "default";
-		this.pontos = 0;		
+		this.pontos = 0;
+                this.primeiroAJogar=false;
 	}
 	public String toString(){
 		int result=0;
@@ -73,4 +85,52 @@ public class Jogador {
    public Carta Joga(Carta carta){
 	   return carta;
    }
+   
+   public Carta Joga(Carta carta, Naipe trunfo){
+           return carta;
+   }
+   
+   public boolean temCartadeNaipe(Naipe n){
+        Carta c[] = this.getCartasNaMao();
+        for (int i=0; i<c.length; i++)
+            if (c[i]!=null){
+                if (c[i].getNaipe().ordinal()==n.ordinal()){
+                    return true;
+                }
+            }
+                
+        return false;
+    }
+   
+   public ArrayList<Integer> buscaCartasNaipe(Naipe n){
+       ArrayList<Integer> pos = new ArrayList<Integer>();
+       
+       if (temCartadeNaipe(n)){
+           Carta c[] = this.getCartasNaMao();
+           for (int i=0;i<c.length;i++){
+               if (c[i]!=null){
+                if (c[i].getNaipe().ordinal()==n.ordinal())
+                   pos.add(i);           
+                }
+               
+           }
+           return pos;
+       }
+       else return null;
+   }
+   
+     public void printCartas(){
+        Carta c[] = this.getCartasNaMao();
+        String resultado="";
+        for (int i=0;i<c.length;i++){
+            if (c[i]==null) resultado+="null";
+            else resultado+=c[i].toString();
+            resultado+="/";
+        }
+        System.out.println(resultado);
+    }
+
+   
 }
+
+
