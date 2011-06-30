@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Goop
  */
-public class Game {
+public class Game implements IGame {
 
     Jogo jogo;
     
@@ -105,11 +105,11 @@ public class Game {
         return Juiz.CalculaDuplaVencedora(jogo.getRodada().getJogadores());
     }
 
-    public static int getGeralDupla1() {
+    public int getGeralDupla1() {
         return Juiz.getPontosGeralDupla1();
     }
 
-    public static int getGeralDupla2() {
+    public int getGeralDupla2() {
         return Juiz.getPontosGeralDupla2();
     }
 
