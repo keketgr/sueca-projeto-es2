@@ -14,10 +14,16 @@ package br.uff.es;
 import br.uff.es.ctrl.CardsController;
 import br.uff.es.pkg.sueca.factory.Factory;
 import br.uff.es.pkg.sueca.factory.IGame;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,7 +33,9 @@ import javax.swing.JOptionPane;
 public class PanelCardsUI extends javax.swing.JPanel {
 
     Map<String,JButton> cardsUiMap;
+    List<JLabel> playersUiLabel;
     private IGame game;
+    private List<String> jogadores;
 
     /** Creates new form PanelCardsUI */
     public PanelCardsUI() {
@@ -37,30 +45,49 @@ public class PanelCardsUI extends javax.swing.JPanel {
         trunfoPanel.setVisible(false);
         cardsCtrl = new CardsController();
         game = Factory.getGame();
+        jogadores = game.iniciaJogo();
+        createUiPlayersLabel();
         makeCards();
     }
 
     private void giveCardToPlayer(int player,int numCard,String card) {
         JButton jBtn = cardsUiMap.get(card);
         if (player==0) 
-            jBtn.setLocation(20, 380-(numCard*35));
+            jBtn.setLocation(20, 400-(numCard*35));
         else if (player==1) 
-            jBtn.setLocation(130+(350-(numCard*35)), 0);
+            jBtn.setLocation(130+(350-(numCard*35)), 20);
         else if (player==2)
-            jBtn.setLocation(620, 380-(numCard*35));
+            jBtn.setLocation(620, 400-(numCard*35));
         else if (player==3)
-            jBtn.setLocation(130+(350-(numCard*35)), 430);
-        jBtn.setEnabled(player==0);
+            jBtn.setLocation(130+(350-(numCard*35)), 450);
+        if (player>0) {
+            escondeCarta(jBtn);
+        }
+        //jBtn.setEnabled(player==0);
         jBtn.setVisible(true);
         remove(jBtn);
         add(jBtn);
+    }
+
+    private Point calculaCoordenadaCartaJogadas(int player) {
+        //System.out.println("PLAYER: "+player);
+        if (player==0) {
+            return new Point(250, 230);
+        } else if (player==1) {
+            return new Point(300,180);//return new Point(305,100);
+        } else if (player==2) {
+            return new Point(350,230);
+        } else {
+            return new Point(300,280);
+        }
+        //return null;
     }
 
     public void giveCards() {
         p0Val.setText("");
         p1Val.setText("");
         cardsCtrl.novaPartida();
-        game.iniciaJogo();
+        showUiPlayersLabel();
         giveCards(cardsCtrl.raffleCards());
     }
 
@@ -81,7 +108,7 @@ public class PanelCardsUI extends javax.swing.JPanel {
         String trunfo = cardsRaffled.get(cardsRaffled.size()-1);
         cardsCtrl.setTrunfo(trunfo);
         showUiTrunfo(trunfo);
-        game.iniciaNovaRodada();
+        game.iniciaNovaRodada(trunfo);
         updateCartas();
         //cardsCtrl.getPartida().setCartasNaMesa(new ArrayList<String>(cardsRaffled));
     }
@@ -97,10 +124,15 @@ public class PanelCardsUI extends javax.swing.JPanel {
 
     private void joga(String cardKey) {
 
+        int player = jogadores.indexOf(game.getProximoJogador());
+        //System.out.println(game.getProximoJogador()+ " - "+game.getNumeroJogador(game.getProximoJogador()));
         String carta = game.joga(cardKey);
+        mostraCarta(carta);
         JButton btn = cardsUiMap.get(carta);
-        int player = game.getNumeroJogador(game.getProximoJogador());
-        new Animacao(btn).animar(player,4,100);
+        
+
+        Point p = calculaCoordenadaCartaJogadas(player);
+        new Animacao(btn).animar(player,(int)p.getX(),(int)p.getY(),4,100);
         if (game.isFimRodada()) {
             String campeaoRodada = game.contabilizaPontos();
             List<String> cartasJogadas = game.getCartasJogadas();
@@ -118,8 +150,18 @@ public class PanelCardsUI extends javax.swing.JPanel {
         }
     }
 
-    private void isPossuiNaipeRodada(List<String> cartasJogador) {
-
+    private List<String> getCartasDisponiveisParaJogo(List<String> cartasJogador) {
+        List<String> cartasDoNaipe = new ArrayList<String>();
+        String naipe = game.getNaipeRodada();
+        if (naipe==null)
+            return new ArrayList<String>(cartasJogador);
+        for (String cartaJogador : cartasJogador) {
+            if (cartaJogador.contains(naipe))
+                cartasDoNaipe.add(cartaJogador);
+        }
+        if (cartasDoNaipe.isEmpty())
+            return new ArrayList<String>(cartasJogador);
+        return cartasDoNaipe;
     }
 
     private void updateCartas() {
@@ -128,11 +170,6 @@ public class PanelCardsUI extends javax.swing.JPanel {
         String jogador = game.getProximoJogador();
         while (jogador.contains("CPU")&&!game.isFimJogo()) {
             jogador = game.getProximoJogador();
-            List<String> cartasJogador = game.getMaoJogador(jogador);
-            for (String key : cardsUiMap.keySet()) {
-                JButton cardUi = cardsUiMap.get(key);
-                cardUi.setEnabled(cartasJogador.contains(key));
-            }
             if (jogador.contains("CPU"))
                 joga(null);
             
@@ -146,37 +183,16 @@ public class PanelCardsUI extends javax.swing.JPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JButton btn = (JButton)evt.getSource();
                 String cardKey = getKey(btn);
-                
-                //int player = cardsCtrl.getPartida().getJogadorNaMesa();
-                //int player = game.getNumeroJogador(game.getProximoJogador());
-                //new Animacao(btn).animar(player,4,100);
-                /*if (player==0)
-                    btn.setLocation(250, 230);
-                else if (player==1)
-                    btn.setLocation(300, 180);
-                else if (player==2)
-                    btn.setLocation(350, 230);
-                else
-                    btn.setLocation(300, 280);*/
-                /*if (player==0)
-                    btn.setLocation(btn.getX()+20, btn.getY());
-                else if (player==1)
-                    btn.setLocation(btn.getX(), btn.getY()+20);
-                else if (player==2)
-                    btn.setLocation(btn.getX()-20, btn.getY());
-                else
-                    btn.setLocation(btn.getX(), btn.getY()-20);*/
-                //cardsCtrl.getPartida().jogaCarta(cardKey);
-                //game.joga(cardKey);
-                joga(cardKey);
-                
-                /*if (game.isFimRodada()) {
-                    game.contabilizaPontos();
-                    game.iniciaNovaRodada();
-                    p0Val.setText(String.valueOf(game.getPontosDupla1()));
-                    p1Val.setText(String.valueOf(game.getPontosDupla2()));
-                }*/
-                updateCartas();
+                String jogador = game.getProximoJogador();
+                List<String> cartasJogador = game.getMaoJogador(jogador);
+                List<String> cartasParaJogar = getCartasDisponiveisParaJogo(cartasJogador);
+                System.out.println("Cartas para jogar:"+cartasParaJogar);
+                if (!cartasParaJogar.contains(cardKey)) {
+                    JOptionPane.showMessageDialog(null, " Jogue uma carta do naipe da mesa ", "Opss", 1);
+                } else if (cartasJogador.contains(cardKey)) {
+                    joga(cardKey);
+                    updateCartas();
+                }
             }
         });
     }
@@ -192,6 +208,8 @@ public class PanelCardsUI extends javax.swing.JPanel {
             }
         }
     }
+
+
 
     private void showUiTrunfo(String trunfo) {
         String[] map = trunfo.split(" de ");
@@ -210,6 +228,41 @@ public class PanelCardsUI extends javax.swing.JPanel {
 
     }
 
+    private void showUiPlayersLabel() {
+        for (JLabel lbl : playersUiLabel)
+            lbl.setVisible(true);
+    }
+
+    private void createUiPlayersLabel() {
+        playersUiLabel = new ArrayList<JLabel>();
+        for (int player=0;player<jogadores.size();player++) {
+            JLabel jLbl = null;
+            if (player==0 || player==2) {
+                jLbl = new JRotatedLabel();
+                jLbl.setSize(77, 104);
+            } else {
+                jLbl = new JLabel();
+                jLbl.setSize(77, 10);
+            }
+            jLbl.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            jLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            jLbl.setText(jogadores.get(player));
+            jLbl.setVisible(false);
+            if (player==0)
+                jLbl.setLocation(5, 400-(5*35));
+            else if (player==1)
+                jLbl.setLocation(130+(350-(5*35)), 5);
+            else if (player==2)
+                jLbl.setLocation(700, 400-(5*35));
+            else if (player==3)
+                jLbl.setLocation(130+(350-(5*35)), 560);
+            playersUiLabel.add(jLbl);
+            this.add(jLbl);
+        }
+        p0Label.setText(jogadores.get(0)+"/"+jogadores.get(2)+" :");
+        p1Label.setText(jogadores.get(1)+"/"+jogadores.get(3)+" :");
+    }
+
     private JButton createUiCard(String card,String naipe) {
         JButton jBtn = new JButton();
         jBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/"+naipe+"/"+card+".png")));
@@ -217,6 +270,16 @@ public class PanelCardsUI extends javax.swing.JPanel {
         jBtn.setSize(77, 104);
         jBtn.setVisible(false);
         return jBtn;
+    }
+
+    private void escondeCarta(JButton btn) {
+        btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/deck.png")));
+    }
+
+    private void mostraCarta(String carta) {
+        String naipe = carta.substring(carta.indexOf(" de ")+4, carta.length());
+        String valor = carta.substring(0,carta.indexOf(" de "));
+        cardsUiMap.get(carta).setIcon(new javax.swing.ImageIcon(getClass().getResource("/"+naipe+"/"+valor+".png")));
     }
 
     public IGame getGame() {
@@ -334,4 +397,18 @@ public class PanelCardsUI extends javax.swing.JPanel {
     private javax.swing.JPanel trunfoPanel;
     // End of variables declaration//GEN-END:variables
 
+    private class JRotatedLabel extends JLabel  {
+        public JRotatedLabel( ) {
+            super();
+            setPreferredSize( new Dimension( 30, 90 ) );
+            setMinimumSize( new Dimension( 30, 90 ) );
+        }
+
+         public void paintComponent(Graphics g) {
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.translate(10.0, 50.0);
+            g2d.rotate( 300 );
+            g2d.drawString(getText(), 0, 0);
+         }
+    }
 }

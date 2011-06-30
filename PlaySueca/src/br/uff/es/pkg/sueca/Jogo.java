@@ -52,9 +52,9 @@ public class Jogo {
     } 
 	
 	public void DeterminaDuplas(Jogador jogadores[]){
-		jogadores[0].setnDupla(1);
- 	    jogadores[1].setnDupla(1);
- 	    jogadores[2].setnDupla(2);
+	    jogadores[0].setnDupla(1);
+ 	    jogadores[1].setnDupla(2);
+ 	    jogadores[2].setnDupla(1);
  	    jogadores[3].setnDupla(2);
 	}
 

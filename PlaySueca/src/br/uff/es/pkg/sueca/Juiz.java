@@ -17,7 +17,7 @@ public class Juiz {
 	  for (int i=0;i<j.length;i++){
 		  if (cVencedor.getPertenceA().equals(j[i].getNome())) return j[i];
 	  }
-          System.out.println("Carta: "+cVencedor+ " pertenceA "+cVencedor.getPertenceA());
+          //System.out.println("Carta: "+cVencedor+ " pertenceA "+cVencedor.getPertenceA());
 	  return null;
   }
   
@@ -26,27 +26,27 @@ public class Juiz {
 		  switch(c[i].getValor()){
 		  	case dama:
 		  		j.setPontos(j.getPontos()+2);
-		  		System.out.println(j.getPontos());
+		  		//System.out.println(j.getPontos());
 		  		break;
 		  	case valete:
 		  		j.setPontos(j.getPontos()+3);
-		  		System.out.println(j.getPontos());
+		  		//System.out.println(j.getPontos());
 		  		break;
 		  	case rei:
 		  		j.setPontos(j.getPontos()+4);
-		  		System.out.println(j.getPontos());
+		  		//System.out.println(j.getPontos());
 		  		break;
 		  	case sete:
 		  		j.setPontos(j.getPontos()+10);
-		  		System.out.println(j.getPontos());
+		  		//System.out.println(j.getPontos());
 		  		break;
 		  	case as:
 		  		j.setPontos(j.getPontos()+11);
-		  		System.out.println(j.getPontos());
+		  		//System.out.println(j.getPontos());
 		  		break;	
 	      }
 		  c[i].setPertenceA(j.getNome());
-		  System.out.println("Carta "+c[i].toString()+" pertence agora a"+j.getNome());
+		  //System.out.println("Carta "+c[i].toString()+" pertence agora a"+j.getNome());
 	  }
   }
 
