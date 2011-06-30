@@ -12,9 +12,10 @@ import java.util.List;
  * @author Goop
  */
 public interface IGame {
-    public void iniciaJogo();
+    public List<String> iniciaJogo();
     public void entregaCarta(String carta,int player);
     public void iniciaNovaRodada();
+    public void iniciaNovaRodada(String cartaTrunfoPartida);
     public String getProximoJogador();
     public int getNumeroJogador(String jogador);
     public List<String> getMaoJogador(String jogador);
@@ -28,5 +29,6 @@ public interface IGame {
     public int getPontosDupla2();
     public boolean isFimRodada();
     public String joga(String carta);
+    public String getNaipeRodada();
     
 }

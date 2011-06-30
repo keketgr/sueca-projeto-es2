@@ -28,15 +28,19 @@ public class Game implements IGame {
 
     }
 
-    public void iniciaJogo() {
+    public List<String> iniciaJogo() {
+        List<String> nomes = new ArrayList<String>();
         Jogador jogadores[]=new Jogador[4];
         jogadores[0] = new JogadorHumano("Player 1");
+        nomes.add(jogadores[0].getNome());
         for (int i = 0; i < 4; i++) {
             if (jogadores[i] == null) {
-                jogadores[i] = new JogadorCPU("CPU" + i);
+                jogadores[i] = new JogadorCPU("CPU " + i);
+                nomes.add(jogadores[i].getNome());
             }
         }
         jogo = new Jogo(jogadores);
+        return nomes;
     }
 
     public void entregaCarta(String carta,int player) {
@@ -50,6 +54,12 @@ public class Game implements IGame {
 
     public void iniciaNovaRodada() {
         jogo.getRodada().iniciaNovaRodada();
+    }
+
+    public void iniciaNovaRodada(String cartaTrunfoPartida) {
+        String naipe = cartaTrunfoPartida.substring(cartaTrunfoPartida.indexOf(" de ")+4, cartaTrunfoPartida.length());
+        Naipe n = Naipe.valueOf(naipe);
+        jogo.getRodada().iniciaNovaRodada(n);
     }
     
     public String getProximoJogador() {
@@ -135,5 +145,9 @@ public class Game implements IGame {
             return jogo.getRodada().joga(mCarta).toString();
         }
         return jogo.getRodada().joga(null).toString();
+    }
+
+    public String getNaipeRodada() {
+        return jogo.getRodada().getNaipeTrunfo().equals(Naipe.NaoDefinido)?null:jogo.getRodada().getNaipeTrunfo().toString();
     }
 }

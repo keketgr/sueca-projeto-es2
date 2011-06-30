@@ -1,6 +1,7 @@
 package br.uff.es.pkg.sueca;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Jogador {
 	private Carta cartasNaMao[]=new Carta[10];
@@ -101,8 +102,25 @@ public class Jogador {
                 
         return false;
     }
+
+   public Carta[] buscaCartasNaipe(Naipe n) {
+       List<Carta> cartasNaipe =  new ArrayList<Carta>();
+
+       if (temCartadeNaipe(n)){
+           Carta c[] = this.getCartasNaMao();
+           for (int i=0;i<c.length;i++){
+               if (c[i]!=null){
+                if (c[i].getNaipe().ordinal()==n.ordinal())
+                   cartasNaipe.add(c[i]);
+                }
+
+           }
+           return cartasNaipe.toArray(new Carta[0]);
+       }
+       else return null;
+   }
    
-   public ArrayList<Integer> buscaCartasNaipe(Naipe n){
+   public ArrayList<Integer> buscaPosCartasNaipe(Naipe n){
        ArrayList<Integer> pos = new ArrayList<Integer>();
        
        if (temCartadeNaipe(n)){
@@ -127,7 +145,7 @@ public class Jogador {
             else resultado+=c[i].toString();
             resultado+="/";
         }
-        System.out.println(resultado);
+        //System.out.println(resultado);
     }
 
    

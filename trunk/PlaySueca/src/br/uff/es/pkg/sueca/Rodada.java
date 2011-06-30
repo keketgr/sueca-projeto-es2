@@ -12,6 +12,7 @@ public class Rodada {
     private int jogadas;
     private int numRodadas;
     private Naipe naipeTrunfo;
+    private Naipe naipeTrunfoPartida;
 
     public Naipe getNaipeTrunfo() {
         return naipeTrunfo;
@@ -28,7 +29,7 @@ public class Rodada {
         this.campeaoDaRodada = new Jogador("Ninguem");
         numRodadas = 0;
         naipeTrunfo = Naipe.NaoDefinido;
-    	
+    	naipeTrunfoPartida = Naipe.NaoDefinido;
     }
 
 	public void iniciaNovaRodada() {
@@ -48,6 +49,11 @@ public class Rodada {
             numRodadas++;
         }
 
+        public void iniciaNovaRodada(Naipe naipeTrunfoPartida) {
+            this.naipeTrunfoPartida = naipeTrunfoPartida;
+            iniciaNovaRodada();
+        }
+
         public Jogador getProximoJogador() {
             return ordem.getFirst();
         }
@@ -64,6 +70,8 @@ public class Rodada {
                 cartaJogada = proxJogador.Joga(carta, this.getNaipeTrunfo());
                 //System.out.println(cartaJogada.getNaipe()+"/"+this.getNaipeTrunfo());
             }
+            //System.out.println("PROX JOG: "+proxJogador.getNome());
+            //System.out.println("CARTA JOGADA : "+cartaJogada);
             cartasJogadas[jogadas] = cartaJogada;
             ordem.addLast(proxJogador);
             jogadas++;
@@ -145,7 +153,14 @@ public class Rodada {
         public boolean isFimRodada() {
             return !(jogadas<jogadores.length);
         }
-        
+
+        public Naipe getNaipeTrunfoPartida() {
+            return naipeTrunfoPartida;
+        }
+
+        public void setNaipeTrunfoPartida(Naipe naipeTrunfoPartida) {
+            this.naipeTrunfoPartida = naipeTrunfoPartida;
+        }
 
 
 	private void DeterminaOrdem(Jogador jogadores[],int player){
@@ -168,8 +183,6 @@ public class Rodada {
 
         private void DeterminaOrdem(Jogador jogadores[]){
 		DeterminaOrdem(jogadores, -1);
-
-
 	}
 	
 }

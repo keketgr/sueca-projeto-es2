@@ -26,7 +26,7 @@ public class JogadorCPU extends Jogador {
 		 c[resposta] = null;
 		 this.setCartasNaMao(c);
                  this.printCartas();
-		 System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
+		 //System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
 		 return cJogada;
 	}
 
@@ -37,10 +37,23 @@ public class JogadorCPU extends Jogador {
         
         @Override
         public Carta Joga(Carta carta, Naipe nTrunfo){
-            Carta cSorteada = new Carta();
-            if (temCartadeNaipe(nTrunfo)){
-                System.out.println("Tem carta.");
-                ArrayList<Integer> posCartasPossiveis = buscaCartasNaipe(nTrunfo);
+            Carta[] cartasPossiveis = buscaCartasNaipe(nTrunfo);
+            if (cartasPossiveis!=null) {
+                Random r = new Random();
+                int resposta = r.nextInt(cartasPossiveis.length);
+                Carta c[] = this.getCartasNaMao();
+                for (int i=0;i<c.length;i++)
+                    if (c[i]!=null && c[i].equals(cartasPossiveis[resposta]))
+                        c[i] = null;
+                return cartasPossiveis[resposta];
+            } else {
+                return Joga();
+            }
+
+            /*if (temCartadeNaipe(nTrunfo)){
+                //System.out.println("Tem carta.");
+
+                ArrayList<Integer> posCartasPossiveis = buscaPosCartasNaipe(nTrunfo);
                 
                 this.printCartas();
                 Random r = new Random();
@@ -49,11 +62,12 @@ public class JogadorCPU extends Jogador {
                 Carta cJogada = c[posCartasPossiveis.get(resposta)];
                 c[resposta] = null;
                 this.setCartasNaMao(c);
-                System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
+                //System.out.println(this.getNome()+" jogou.("+cJogada.getNaipe()+"/"+cJogada.getValor());
 		return cJogada;
                 
-            }      
-                   
-            else { System.out.println("Nao tem carta."); return Joga();}
+            }  else {
+                //System.out.println("Nao tem carta.");
+                return Joga();
+            }*/
         }
 }
