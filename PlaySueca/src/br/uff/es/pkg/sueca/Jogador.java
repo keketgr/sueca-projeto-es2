@@ -141,6 +141,7 @@ public class Jogador {
        for (int i=0;i<cartasNaMao.length;i++) {
            cartasNaMao[i] = null;
        }
+       setPontos(0);
    }
    
      public void printCartas(){
