@@ -16,23 +16,28 @@ import javax.swing.JButton;
  */
 public class Animacao {
 
-    private boolean acabou;
+    private static Boolean acabou;
     private JButton btn;
 
     public Animacao(JButton btn) {
         this.btn = btn;
+        if (acabou==null)
+            acabou = true;
     }
 
-    public void animar(int player,int x, int y,int frames,int sleep) {
-        acabou = false;
+    public void animar(int x, int y,int frames,int sleep) {
+        
         final int fFrames = frames;
         final int fSleep = sleep;
         final int cx = x;
         final int cy = y;
-        final int p = player;
+
         Runnable r = new Runnable() {
 
             public void run() {
+                
+
+                acabou = false;
                 Point pt = new Point(btn.getLocation());
                 int deltax,deltay = 0;
                 /*if (fOrient==0) {
@@ -61,7 +66,7 @@ public class Animacao {
                         Logger.getLogger(Animacao.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                System.out.println("Player "+p+" - "+btn.getLocation());
+                //System.out.println("Player "+p+" - "+btn.getLocation());
                 acabou = true;
             }
         };

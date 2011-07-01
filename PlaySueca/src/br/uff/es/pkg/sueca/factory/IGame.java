@@ -14,6 +14,7 @@ import java.util.List;
 public interface IGame {
     public List<String> iniciaJogo();
     public void entregaCarta(String carta,int player);
+    public void iniciaNovaPartida();
     public void iniciaNovaRodada();
     public void iniciaNovaRodada(String cartaTrunfoPartida);
     public String getProximoJogador();

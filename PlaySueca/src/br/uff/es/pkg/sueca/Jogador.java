@@ -136,6 +136,12 @@ public class Jogador {
        }
        else return null;
    }
+
+   public void descartaCartasJogador() {
+       for (int i=0;i<cartasNaMao.length;i++) {
+           cartasNaMao[i] = null;
+       }
+   }
    
      public void printCartas(){
         Carta c[] = this.getCartasNaMao();
