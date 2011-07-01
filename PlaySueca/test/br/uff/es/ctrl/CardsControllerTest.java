@@ -17,12 +17,12 @@ import static org.junit.Assert.*;
  *
  * @author Goop
  */
-public class PartidaControllerTest {
+public class CardsControllerTest {
 
-    PartidaController partida;
+    CardsController partida;
 
-    public PartidaControllerTest() {
-        partida = new PartidaController();
+    public CardsControllerTest() {
+        partida = new CardsController();
     }
 
     @BeforeClass
@@ -40,7 +40,7 @@ public class PartidaControllerTest {
     @Test
     public void testEntregaCartaAndGetCartasNaMesa() {
         System.out.println("testOrdenaCartas");
-        PartidaController instance = new PartidaController();
+        CardsController instance = new CardsController();
         List<String> cartasNaMesaResult = new ArrayList<String>();
         for (int i=0;i<4;i++) {
             instance.entregaCarta(i, "as de copas");
@@ -73,7 +73,7 @@ public class PartidaControllerTest {
     @Test
     public void testOrdenaCartas() {
         System.out.println("testOrdenaCartas");
-        PartidaController instance = new PartidaController();
+        CardsController instance = new CardsController();
         List<String> cartasNaMesaResult = new ArrayList<String>();
         for (int i=0;i<4;i++) {
             instance.entregaCarta(i, "as de copas");
