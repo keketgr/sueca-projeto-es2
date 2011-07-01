@@ -12,6 +12,7 @@ import br.uff.es.pkg.sueca.JogadorHumano;
 import br.uff.es.pkg.sueca.Jogo;
 import br.uff.es.pkg.sueca.Juiz;
 import br.uff.es.pkg.sueca.Naipe;
+import br.uff.es.pkg.sueca.Rodada;
 import br.uff.es.pkg.sueca.Valor;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,10 @@ public class Game implements IGame {
 
     public void iniciaNovaRodada() {
         jogo.getRodada().iniciaNovaRodada();
+    }
+
+    public void iniciaNovaPartida() {
+        jogo.iniciaPartida();
     }
 
     public void iniciaNovaRodada(String cartaTrunfoPartida) {

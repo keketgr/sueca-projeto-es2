@@ -27,6 +27,12 @@ public class Jogo {
             DeterminaDuplas(jogadores);
         }
 
+        public void iniciaPartida() {
+            rodada = new Rodada(jogadores);
+            for (int i=0;i<jogadores.length;i++)
+                jogadores[i].descartaCartasJogador();
+        }
+
         public void distrubuiCarta(Carta carta,int player) {
   
             if (jogadores[player].entregaCartaAoJogador(carta))

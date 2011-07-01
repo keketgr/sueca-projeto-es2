@@ -79,7 +79,7 @@ public class Rodada {
         }
 
         public String contabilizaPontos() {
-            this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));
+            this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores,naipeTrunfoPartida));
             Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
             return this.getCampeaoDaRodada().getNome();
         }
@@ -115,7 +115,7 @@ public class Rodada {
 			ordem.addLast(proxJogador);
 		}
 		//auto-explicativo
-		this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores));                            
+		this.setCampeaoDaRodada(Juiz.DeterminaVencedorJogada(cartasJogadas,jogadores,naipeTrunfoPartida));
 		Juiz.SomaPontos(cartasJogadas, this.getCampeaoDaRodada());
 	}
 

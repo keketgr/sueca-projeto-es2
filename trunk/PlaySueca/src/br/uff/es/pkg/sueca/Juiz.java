@@ -5,15 +5,31 @@ public class Juiz {
   private static int pontosD1=0;
   private static int pontosD2=0;
 	
-  public static Jogador DeterminaVencedorJogada(Carta c[], Jogador j[]){
+  public static Jogador DeterminaVencedorJogada(Carta cartas[], Jogador j[],Naipe trunfo){
 	  //Retorna o nome do jogador vencedor
 	  //Comecamos assumindo que o vencedor eh o trunfo
-	  Carta cVencedor = c[0];
-	  for(int i=1;i<4;i++){
-		  if ((c[i].getNaipe()==cVencedor.getNaipe())&&(c[i].getValor().ordinal()>cVencedor.getValor().ordinal())){
-			  cVencedor = c[i];
-		  }
+          Carta c[] = new Carta[cartas.length];
+          for (int i=0;i<cartas.length;i++)
+              c[i] = cartas[i];
+          Carta cTrunfo = null;
+          for(int i=0;i<4;i++){
+              if ((c[i].getNaipe()==trunfo)&&cTrunfo==null)
+                  cTrunfo = c[i];
+            if ((c[i].getNaipe()==trunfo)&&(c[i].getValor().ordinal()>cTrunfo.getValor().ordinal())){
+                cTrunfo = c[i];
+                c[i] = null;
+            }
+          }
+	  Carta cVencedor = null;
+	  for(int i=0;i<4;i++){
+              if (cVencedor==null && c[i]!=null)
+                  cVencedor = c[i];
+
+              if (c[i]!=null&&(c[i].getNaipe()==cVencedor.getNaipe())&&(c[i].getValor().ordinal()>cVencedor.getValor().ordinal())){
+                      cVencedor = c[i];
+              }
 	  }
+          cVencedor = cTrunfo==null?cVencedor:cTrunfo;
 	  for (int i=0;i<j.length;i++){
 		  if (cVencedor.getPertenceA().equals(j[i].getNome())) return j[i];
 	  }
