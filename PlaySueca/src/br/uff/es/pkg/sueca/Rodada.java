@@ -25,6 +25,9 @@ public class Rodada {
     public Rodada(Jogador jogadores[]){
     	ordem = new LinkedList<Jogador>();
         this.jogadores = jogadores;
+        for (int i=0; i<jogadores.length; i++){
+            jogadores[i].setPontos(0);
+        }
         DeterminaOrdem(jogadores,0);
         this.campeaoDaRodada = new Jogador("Ninguem");
         numRodadas = 0;
